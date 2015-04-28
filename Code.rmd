@@ -5,6 +5,11 @@ date: "28/04/2015"
 output: html_document
 ---
 
+# R-meme-generator
+Hice un script para hacer memes usando R. Úsenlo sabiamente para el avance de la ciencia.
+
+I made a script to make memes whith R. Here is the code.
+
 
 ```{r}
 library(png)
@@ -18,7 +23,7 @@ library(png)
 #vertical.margin: manages the extra vertical space
  
 MEME.GENERATOR <- 
-function(name.file.read.png, name.file.write.png, over.text, under.text, ps=12, height = 500, vertical.margin=20)
+function(name.file.read.png, name.file.write.png, over.text, under.text, ps=12, height = 600, vertical.margin=15)
 {
 #read file
 img<-readPNG(name.file.read.png)
@@ -47,6 +52,7 @@ dev.off()
  
  
 MEME.GENERATOR("trollface.png", "meme-R.png", "algunos hacen\n estadística en R", "yo hago memes", ps=5, height=450)
+
 
 ```
 
