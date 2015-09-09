@@ -14,45 +14,30 @@ I made a script to make memes whith R. Here is the code.
 ```{r}
 library(png)
  
-#name.file.read.png: png file to make a meme
-#name.file.write.png: output png file
-#over.text: text over the image
-#under.text text under the image
-#ps=12: point size, changes the text size
-#height: manages the vertical length 
-#vertical.margin: manages the extra vertical space
- 
-MEME.GENERATOR <- 
-function(name.file.read.png, name.file.write.png, over.text, under.text, ps=12, height = 600, vertical.margin=15)
+png_meme_generator <- function(web.path, over.text, under.text)
 {
-#read file
-img<-readPNG(name.file.read.png)
- 
-#get size
-w<-dim(img)[2]
- 
-#open new file for output
-png(name.file.write.png, width=w, height=height, bg="#000000", pointsize = ps)
-par(mar=c(vertical.margin,0,vertical.margin,0), xpd=NA, mgp=c(0,0,0), oma=c(0,0,0,0), ann=F)
-plot.new()
-plot.window(0:1, 0:1)
- 
-#fill plot with image
-usr<-par("usr")    
-rasterImage(img, usr[1], usr[3], usr[2], usr[4])
- 
-#add text
-text(.5,1.05, over.text, cex=5, col="#ffffff", pos=3)
-#add text
-text(.5, -.05, under.text, cex=5, col="#ffffff", pos=1)
- 
-#close image
-dev.off()
-}
- 
- 
-MEME.GENERATOR("trollface.png", "meme-R.png", "algunos hacen\n estadística en R", "yo hago memes", ps=5, height=450)
+  con <- url(web.path, open = 'rb')
+  rawpng <- readBin(con, what = 'raw', n = 50000)
+  close(con)
 
+  img <- png::readPNG(rawpng)
+
+  par(xpd = NA, mgp = c(0, 0, 0), oma = c(0, 0, 0, 0), ann = F)
+
+  plot.new()
+  plot.window(0:1, 0:1)
+
+  usr<-par("usr")    
+  rasterImage(img, usr[1], usr[3], usr[2], usr[4])
+
+  text(.5, 1.05,  over.text, cex = 2, col = "#000000", pos = 3)
+  text(.5, -.05, under.text, cex = 2, col = "#000000", pos = 1)
+}
+
+png_meme_generator(
+  "http://i2.kym-cdn.com/photos/images/original/000/208/140/1322357772581.png",
+  "Tu cara cuando ves", 
+  "un meme hecho en R")
 
 ```
 
